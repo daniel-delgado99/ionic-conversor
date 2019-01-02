@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>Conversor</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list no-lines>
+		<ion-item>
+			<ion-label>Medida</ion-label>
+			<ion-select [(ngModel)]="medida" (ionChange)="setMedida()">
+				<ion-option value="comprimento">Comprimento</ion-option>
+				<ion-option value="volume">Volume</ion-option>
+			</ion-select>
+		</ion-item>
+	</ion-list>
+	<div [formGroup]="medidasForm">
+		<ng-container *ngFor="let i of [0, 1]">
+			<ion-list [attr.no-margin]="i === 0">
+				<ion-item>
+					<ion-input type="number" formControlName="valor{{i+1}}" (keyup)="onChange(i)" placeholder="Digite o valor"></ion-input>
+					<ion-select (ionChange)="onChange(i)" formControlName="medida{{i+1}}">
+						<ion-option *ngFor="let medida of medidasArray; let i = index" [value]="medida" [selected]="i === 0">{{ medida }}</ion-option>
+					</ion-select>
+				</ion-item>
+			</ion-list>
+			<ng-container *ngIf="i === 0">
+				<h1 margin text-center>=</h1>
+			</ng-container>
+		</ng-container>
+	</div>
+</ion-content>
